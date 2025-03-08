@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'node:path';
 
-const filePath = path.join(__dirname, 'searchHistory.json');
+const filePath = path.join(process.cwd(), 'searchHistory.json');
 
 class City {
   constructor(public id: string, public name: string) {}

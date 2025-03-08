@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import fetch from 'node-fetch';
 
 dotenv.config();
 
@@ -28,11 +27,12 @@ class Weather {
 
 class WeatherService {
   private baseURL = 'https://api.openweathermap.org';
-  private apiKey = process.env.OPENWEATHER_API_KEY || '';
+  private apiKey = process.env.API_KEY || '';
 
   // Fetch location data using city name
   private async fetchLocationData(city: string): Promise<any> {
     const url = `${this.baseURL}/geo/1.0/direct?q=${encodeURIComponent(city)}&limit=1&appid=${this.apiKey}`;
+    console.log(url);
     const response = await fetch(url);
     return response.json();
   }
@@ -46,12 +46,13 @@ class WeatherService {
   // Fetch weather data using coordinates
   private async fetchWeatherData(coordinates: Coordinates): Promise<any> {
     const url = `${this.baseURL}/data/2.5/weather?lat=${coordinates.lat}&lon=${coordinates.lon}&units=metric&appid=${this.apiKey}`;
+
     const response = await fetch(url);
     return response.json();
   }
 
   // Get weather for a given city
-  async getWeatherForCity(city: string): Promise<Weather | null> {
+  async getWeatherForCity(city: string): Promise<Weather[] | null> {
     try {
       const locationData = await this.fetchLocationData(city);
       const coordinates = this.destructureLocationData(locationData);
@@ -61,8 +62,8 @@ class WeatherService {
       }
 
       const weatherData = await this.fetchWeatherData(coordinates);
-      return new Weather(weatherData);
-    } catch (error) {
+      return [new Weather(weatherData)];
+    } catch (error: any) {
       console.error('Error fetching weather data:', error.message);
       return null;
     }
