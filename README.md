@@ -14,10 +14,10 @@ A web application that allows users to search for weather information by city. T
 5. Weather API
 
     Setup Instructions
-1. Clone the repository
-2. Run "npm install" to install dependencies
-3. Set up environment variables for API access
-4. Run "npm start" to start the application
+  1. Clone the repository
+  2. Run "npm install" to install dependencies
+  3. Set up environment variables for API access
+  4. Run "npm start" to start the application
 
 
 License
